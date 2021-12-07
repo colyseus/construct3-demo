@@ -1,6 +1,6 @@
 import { Room, Client } from "colyseus";
-import { Entity } from "./Entity";
-import { State } from "./State";
+import { Entity } from "./schema/Entity";
+import { State } from "./schema/State";
 
 interface MouseMessage {
   x: number;
