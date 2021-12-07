@@ -16,8 +16,6 @@
     "@colyseus/loadtest": "^0.15.0-preview.0",
     "@types/express": "^4.16.1",
     "@types/redis": "^2.8.12",
-    "debug": "^4.1.1",
-    "file-loader": "^3.0.1",
     "ts-node": "^8.0.2",
     "ts-node-dev": "^1.1.8",
     "typescript": "^3.3.3"

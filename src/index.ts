@@ -23,8 +23,8 @@ gameServer.define("my_room", MyRoom);
 // add colyseus monitor
 const auth = basicAuth({ users: { 'admin': 'admin' }, challenge: true });
 app.use("/colyseus", auth, monitor());
-app.get("/", (req, res) => 
+app.get("/", (req, res) =>
   res.send("Colyseus 0.15.0 - See https://docs.colyseus.io/colyseus/getting-started/construct3-client/"));
 
-gameServer.listen(port).then(() => 
+gameServer.listen(port).then(() =>
   console.log(`Listening on ${port}`));
