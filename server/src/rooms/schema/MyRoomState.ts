@@ -1,21 +1,18 @@
 import { generateId } from "colyseus";
-import { Schema, type, MapSchema, filterChildren } from "@colyseus/schema";
+import { Schema, type, MapSchema } from "@colyseus/schema";
 
 import { Entity } from "./Entity";
 import { Player } from "./Player";
 
-const WORLD_SIZE = 2000;
 export const DEFAULT_PLAYER_RADIUS = 10;
+export const WORLD_SIZE = 2000;
 
-export class State extends Schema {
+export class MyRoomState extends Schema {
 
-  width = WORLD_SIZE;
-  height = WORLD_SIZE;
+  @type("number") timeElapsed = 0;
+  @type({ map: Entity }) entities = new MapSchema<Entity>();
 
-  @type({ map: Entity })
-  entities = new MapSchema<Entity>();
-
-  initialize () {
+  populate () {
     // create some food entities
     for (let i = 0; i < 20; i++) {
       this.createFood();
@@ -24,18 +21,20 @@ export class State extends Schema {
 
   createFood () {
     const food = new Entity().assign({
-      x: Math.random() * this.width,
-      y: Math.random() * this.height,
+      x: Math.random() * WORLD_SIZE,
+      y: Math.random() * WORLD_SIZE,
       radius: Math.max(4, (Math.random() * (DEFAULT_PLAYER_RADIUS - 1)))
     });
     this.entities.set(generateId(), food);
   }
 
   createPlayer(sessionId: string) {
-    this.entities.set(sessionId, new Player().assign({
-      x: Math.random() * this.width,
-      y: Math.random() * this.height
-    }));
+    const player = new Player().assign({
+      x: Math.random() * WORLD_SIZE,
+      y: Math.random() * WORLD_SIZE
+    });
+    this.entities.set(sessionId, player);
+    return player;
   }
 
   update() {

@@ -1,5 +1,5 @@
 import { Entity } from "./Entity";
-import { DEFAULT_PLAYER_RADIUS } from "./State";
+import { DEFAULT_PLAYER_RADIUS } from "./MyRoomState";
 
 export class Player extends Entity {
     constructor() {
