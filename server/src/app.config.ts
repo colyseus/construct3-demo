@@ -6,6 +6,7 @@ import { playground } from "@colyseus/playground";
  * Import your Room files
  */
 import { MyRoom } from "./rooms/MyRoom";
+import { matchMaker } from "colyseus";
 
 export default config({
 
@@ -24,6 +25,12 @@ export default config({
          */
         app.get("/hello_world", (req, res) => {
             res.send("It's time to kick ass and chew bubblegum!");
+        });
+
+        // Custom seat reservation
+        app.get("/reserve-seat", async (req, res) => {
+          const seatReservation = await matchMaker.create("my_room", {});
+          res.json(seatReservation);
         });
 
         /**
