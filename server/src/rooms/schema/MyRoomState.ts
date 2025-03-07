@@ -82,12 +82,6 @@ export class MyRoomState extends Schema {
         if (entity.x > WORLD_SIZE) { entity.x = WORLD_SIZE; }
         if (entity.y < 0) { entity.y = 0; }
         if (entity.y > WORLD_SIZE) { entity.y = WORLD_SIZE; }
-
-      } else {
-        //
-        // touch all satic entities for filtering by distance...
-        //
-        entity['$changes'].touch(0);
       }
     });
 

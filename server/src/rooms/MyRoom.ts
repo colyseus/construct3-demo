@@ -4,9 +4,9 @@ import { Entity } from "./schema/Entity";
 
 export class MyRoom extends Room<MyRoomState> {
   maxClients = 4;
+  state = new MyRoomState();
 
   onCreate(options: any) {
-    this.setState(new MyRoomState());
 
     // populate state/world
     this.state.populate();
@@ -57,14 +57,26 @@ export class MyRoom extends Room<MyRoomState> {
     }, 1000);
   }
 
-  onLeave(client: Client) {
+  async onLeave(client: Client, consented: boolean) {
     console.log(client.sessionId, "LEFT!");
     const entity = this.state.entities.get(client.sessionId);
 
-    // entity may be already dead.
-    if (entity) {
-      entity.dead = true;
+    try {
+      if (consented) {
+        throw new Error("consented leave!");
+      }
+
+      console.log("Waiting for reconnection...");
+      await this.allowReconnection(client, 2);
+      console.log("Reconnected!");
+
+    } catch (e) {
+      // entity may be already dead.
+      if (entity) {
+        entity.dead = true;
+      }
     }
+
   }
 
   onDispose() {
