@@ -4,6 +4,7 @@ import { DEFAULT_PLAYER_RADIUS } from "./MyRoomState";
 
 export class Player extends Entity {
     @type("number") level: number = 1;
+    @type("boolean") disconnected: boolean;
 
     constructor() {
         super();
